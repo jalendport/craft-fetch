@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-          "lukeyouell\\guzzle\\": "src/"
+          "lukeyouell\\fetch\\": "src/"
         }
     },
     "extra": {
