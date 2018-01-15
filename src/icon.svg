@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg id="GuzzleIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 480 480">
+  <defs>
+    <style>
+      .guzzle-cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .guzzle-cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="70.29" y1="811.71" x2="409.71" y2="472.29" gradientTransform="matrix(1, 0, 0, -1, 0, 882)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fdd819"/>
+      <stop offset="1" stop-color="#e80505"/>
+    </linearGradient>
+  </defs>
+  <title>guzzle-icon</title>
+  <circle class="guzzle-cls-1" cx="240" cy="240" r="240"/>
+  <path class="guzzle-cls-2" d="M363.66,197.13l-47.1,47.1a5.88,5.88,0,0,1-10-4.15V204.74h-186a5.88,5.88,0,0,1-5.87-5.88V187.1a5.87,5.87,0,0,1,5.87-5.87h186V145.88a5.89,5.89,0,0,1,10-4.15l47.09,47.09a5.87,5.87,0,0,1,0,8.31ZM116.34,291.18l47.09,47.09a5.89,5.89,0,0,0,10-4.15V298.77h186a5.87,5.87,0,0,0,5.87-5.87V281.14a5.88,5.88,0,0,0-5.87-5.88h-186V239.92a5.88,5.88,0,0,0-10-4.15l-47.1,47.1A5.87,5.87,0,0,0,116.34,291.18Z"/>
+</svg>
