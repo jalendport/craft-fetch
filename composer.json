@@ -1,5 +1,5 @@
 {
-    "name": "lukeyouell/craft3-fetch",
+    "name": "lukeyouell/craft-fetch",
     "description": "Utilise the Guzzle HTTP client from within your Craft templates.",
     "type": "craft-plugin",
     "version": "1.0.0",
@@ -12,8 +12,8 @@
         "fetch"
     ],
     "support": {
-        "docs": "https://github.com/lukeyouell/craft3-fetch/blob/master/README.md",
-        "issues": "https://github.com/lukeyouell/craft3-fetch/issues"
+        "docs": "https://github.com/lukeyouell/craft-fetch/blob/master/README.md",
+        "issues": "https://github.com/lukeyouell/craft-fetch/issues"
     },
     "license": "MIT",
     "authors": [
@@ -36,7 +36,7 @@
         "schemaVersion": "1.0.0",
         "hasCpSettings": false,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/lukeyouell/craft3-fetch/master/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/lukeyouell/craft-fetch/master/CHANGELOG.md",
         "class": "lukeyouell\\fetch\\Fetch"
     }
 }
