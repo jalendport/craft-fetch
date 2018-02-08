@@ -12,7 +12,7 @@
         "fetch"
     ],
     "support": {
-        "docs": "https://github.com/lukeyouell/craft-fetch/blob/master/README.md",
+        "docs": "https://github.com/lukeyouell/craft-fetch/blob/v1/README.md",
         "issues": "https://github.com/lukeyouell/craft-fetch/issues"
     },
     "license": "MIT",
@@ -36,7 +36,7 @@
         "schemaVersion": "1.0.0",
         "hasCpSettings": false,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/lukeyouell/craft-fetch/master/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/lukeyouell/craft-fetch/v1/CHANGELOG.md",
         "class": "lukeyouell\\fetch\\Fetch"
     }
 }
