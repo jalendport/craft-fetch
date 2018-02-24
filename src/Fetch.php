@@ -11,6 +11,7 @@
 namespace lukeyouell\fetch;
 
 use lukeyouell\fetch\variables\FetchVariable;
+use lukeyouell\fetch\twigextensions\FetchTwigExtension;
 
 use Craft;
 use craft\base\Plugin;
@@ -48,6 +49,8 @@ class Fetch extends Plugin
     {
         parent::init();
         self::$plugin = $this;
+
+        Craft::$app->view->registerTwigExtension(new FetchTwigExtension());
 
         Event::on(
             CraftVariable::class,
