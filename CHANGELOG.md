@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.1.0 - 2018-02-24
+
+### Added
+- `fetch()` twig extension
+
 ## 1.0.2 - 2018-02-08
 
 ### Changed
