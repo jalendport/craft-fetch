@@ -50,7 +50,7 @@ This plugin is built to work with the standard [Guzzle request options](http://d
     }
 } %}
 
-{% set request = craft.fetch.request(client, 'POST', 'api/0.1/test', options) %}
+{% set request = fetch(client, 'POST', 'api/0.1/test', options) %}
 ```
 
 #### Response (successful)
