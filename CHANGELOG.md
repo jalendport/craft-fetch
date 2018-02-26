@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 1.1.1 - 2018-02-26
 
 ### Changed
 - Set minimum requirement to `^3.0.0-RC11`
