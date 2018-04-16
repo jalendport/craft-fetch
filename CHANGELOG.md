@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.1.2 - 2018-04-16
+
+### Changed
+- New icon
+- Set Craft CMS minimum requirement to `^3.0.0`
+
 ## 1.1.1 - 2018-02-26
 
 ### Changed
