@@ -61,12 +61,18 @@ This plugin is built to work with the standard [Guzzle request options](http://d
 {
    "statusCode":200,
    "reason":"OK",
-   "body":{
+   "body": {
       "credits_left":30,
       "test_id":"JDHFbrt7",
       "poll_state_url":"https:\/\/gtmetrix.com\/api\/0.1\/test\/JDHFbrt7"
    }
 }
+```
+
+You can fetch the string response by adding an additional parameter of `false` like so:
+
+```twig
+{% set request = fetch(client, 'POST', 'api/0.1/test', options, false) %}
 ```
 
 #### Response (error)

@@ -42,9 +42,9 @@ class FetchTwigExtension extends \Twig_Extension
         $response = $client->request($method, $destination, $request);
 
         if ($parseJson) {
-          $body = json_decode($response->getBody(), true);
+            $body = json_decode($response->getBody(), true);
         } else {
-          $body = (string)$response->getBody();
+            $body = (string)$response->getBody();
         }
 
         return [
