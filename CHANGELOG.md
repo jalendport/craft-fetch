@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.2.0 - 2018-08-02
+
+### Added
+- You can now return the string response instead of parsed JSON
+
 ## 1.1.2 - 2018-04-16
 
 ### Changed
