@@ -4,14 +4,14 @@
  *
  * Utilise the Guzzle HTTP client from within your Craft templates.
  *
- * @link      https://github.com/lukeyouell
- * @copyright Copyright (c) 2018 Luke Youell
+ * @link      https://github.com/jalendport
+ * @copyright Copyright (c) 2018 Jalen Davenport
  */
 
-namespace lukeyouell\fetch;
+namespace jalendport\fetch;
 
-use lukeyouell\fetch\variables\FetchVariable;
-use lukeyouell\fetch\twigextensions\FetchTwigExtension;
+use jalendport\fetch\variables\FetchVariable;
+use jalendport\fetch\twigextensions\FetchTwigExtension;
 
 use Craft;
 use craft\base\Plugin;
@@ -24,7 +24,7 @@ use yii\base\Event;
 /**
  * Class Fetch
  *
- * @author    Luke Youell
+ * @author    Jalen Davenport
  * @package   Fetch
  * @since     1.0.0
  *
