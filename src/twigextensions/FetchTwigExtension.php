@@ -4,18 +4,18 @@
  *
  * Utilise the Guzzle HTTP client from within your Craft templates.
  *
- * @link      https://github.com/lukeyouell
- * @copyright Copyright (c) 2018 Luke Youell
+ * @link      https://github.com/jalendport
+ * @copyright Copyright (c) 2018 Jalen Davenport
  */
 
-namespace lukeyouell\fetch\twigextensions;
+namespace jalendport\fetch\twigextensions;
 
-use lukeyouell\fetch\Fetch;
+use jalendport\fetch\Fetch;
 
 use Craft;
 
 /**
-* @author    Luke Youell
+* @author    Jalen Davenport
 * @package   Fetch
 * @since     1.1.0
 */
