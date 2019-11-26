@@ -43,6 +43,9 @@ class FetchTwigExtension extends \Twig_Extension
 
         if ($parseJson) {
             $body = json_decode($response->getBody(), true);
+        } else if (strpos($response->getHeader('content-type')[0], 'text/html') !== false) {
+			$body = (string)$response->getBody()->getContents();
+			$body = preg_replace("/\xEF\xBB\xBF/", "", $body);
         } else {
             $body = (string)$response->getBody();
         }
