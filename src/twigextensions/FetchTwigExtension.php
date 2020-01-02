@@ -33,7 +33,7 @@ class FetchTwigExtension extends \Twig_Extension
       ];
   }
 
-  public function fetch($client, $method, $destination, $request = [], $parseJson = true)
+  public function fetch($client, $method, $destination, $request = [], $format = 'json')
   {
       $client = new \GuzzleHttp\Client($client);
 
@@ -41,10 +41,15 @@ class FetchTwigExtension extends \Twig_Extension
 
         $response = $client->request($method, $destination, $request);
 
-        if ($parseJson) {
+        if ($format == 'json') {
             $body = json_decode($response->getBody(), true);
+        } elseif ($format == 'xml') {
+            $xmlbody = simplexml_load_string($response->getBody(), null, LIBXML_NOCDATA);
+
+            $json = json_encode($xmlbody);
+            $body = json_decode($json, true);
         } else {
-            $body = (string)$response->getBody();
+          $body = (string)$response->getBody();
         }
 
         return [
@@ -59,7 +64,8 @@ class FetchTwigExtension extends \Twig_Extension
           'error' => true,
           'reason' => $e->getMessage()
         ];
-
+        
       }
   }
+  
 }
