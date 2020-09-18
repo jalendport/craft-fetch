@@ -55,9 +55,19 @@ class FetchTwigExtension extends \Twig_Extension
 
       } catch (\Exception $e) {
 
+        $response = $e->getResponse();
+
+        if ($parseJson) {
+          $body = json_decode($response->getBody(), true);
+        } else {
+          $body = (string)$response->getBody();
+        }
+
         return [
           'error' => true,
-          'reason' => $e->getMessage()
+          'statusCode' => $response->getStatusCode(),
+          'reason' => $e->getMessage(),
+          'body' => $body
         ];
 
       }
