@@ -33,9 +33,16 @@ class FetchTwigExtension extends \Twig_Extension
       ];
   }
 
-  public function fetch($client, $method, $destination, $request = [], $parseJson = true)
+  public function fetch($client, $method, $destination = '', $request = [], $parseJson = true)
   {
       $client = new \GuzzleHttp\Client($client);
+    /**
+     * @note Why check `null` then re-assign param?
+     * In Guzzle 7 if the relative URI param aka $destination is `null || undefined`
+     * an error of 'URI must be a string or UriInterface' will be thrown.
+     * @see https://github.com/jalendport/craft-fetch/issues/9
+     */
+    if (is_null($destination)) $destination = '';
 
       try {
 
