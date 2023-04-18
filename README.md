@@ -1,30 +1,12 @@
 <img src="src/icon.svg" alt="icon" width="100" height="100">
 
-# Fetch plugin for Craft CMS 3.x
+# Fetch plugin for Craft 4
 
-Utilise the Guzzle HTTP client from within your Craft templates.
+Guzzle HTTP client from within your Craft templates
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0 or later.
-
-## Installation
-
-To install the plugin, follow these instructions.
-
-1. Open your terminal and go to your Craft project:
-
-        cd /path/to/project
-
-2. Then tell Composer to load the plugin:
-
-        composer require jalendport/craft-fetch
-
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Fetch.
-
-## Using Fetch
-
-This plugin is built to work with the standard [Guzzle request options](http://docs.guzzlephp.org/en/stable/request-options.html)
+This plugin is compatible with Craft 4 and up.
 
 ### Parameters
 
@@ -41,46 +23,51 @@ This plugin is built to work with the standard [Guzzle request options](http://d
 
 ```twig
 {% set client = {
-    base_uri : 'https://gtmetrix.com',
+    base_uri : 'https://official-joke-api.appspot.com/',
     timeout : 10
 } %}
 
-{% set options = {
-    auth : ['username', 'password'],
-    form_params : {
-      url : 'https://www.google.co.uk'
-    }
-} %}
+{% set options = {} %}
 
-{% set request = fetch(client, 'POST', 'api/0.1/test', options) %}
+{% set request = fetch(client, 'GET', 'random_joke', options) %}
+
+{% dd(request|json_encode|raw) %}
 ```
 
 #### Response (successful)
 
 ```json
 {
-   "statusCode":200,
-   "reason":"OK",
-   "body": {
-      "credits_left":30,
-      "test_id":"JDHFbrt7",
-      "poll_state_url":"https:\/\/gtmetrix.com\/api\/0.1\/test\/JDHFbrt7"
-   }
+  "statusCode": 200,
+  "reason": "OK",
+  "body": {
+    "type": "general",
+    "setup": "Who is the coolest Doctor in the hospital?",
+    "punchline": "The hip Doctor!",
+    "id": 302
+  }
 }
 ```
 
 You can fetch the string response by adding an additional parameter of `false` like so:
 
 ```twig
-{% set request = fetch(client, 'POST', 'api/0.1/test', options, false) %}
+{% set client = {
+    base_uri : 'http://api.geonames.org/'
+} %}
+
+{% set request = fetch(client, 'GET', 'srtm1?lat=50.01&lng=10.2&username=demo&style=full', {}, false) %}
+
+{% dd(request|raw) %}
 ```
 
 #### Response (error)
 
 ```json
 {
-   "error":true,
-   "reason":"Client error: `POST https:\/\/gtmetrix.com\/api\/0.1\/test` resulted in a `401 Authorization Required` response:\n{\u0022error\u0022:\u0022Invalid e-mail and\/or API key\u0022}\n\n"
+  "statusCode": 200,
+  "reason": "200",
+  "body": "208"
 }
 ```
 

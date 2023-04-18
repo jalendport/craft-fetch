@@ -1,8 +1,8 @@
 <?php
 /**
- * Fetch plugin for Craft CMS 3.x
+ * Fetch plugin for Craft 4
  *
- * Utilise the Guzzle HTTP client from within your Craft templates.
+ * Guzzle HTTP client from within your Craft templates.
  *
  * @link      https://github.com/jalendport
  * @copyright Copyright (c) 2018 Jalen Davenport
@@ -10,56 +10,65 @@
 
 namespace jalendport\fetch\twigextensions;
 
-use jalendport\fetch\Fetch;
-
 use Craft;
+use GuzzleHttp\Exception\GuzzleException;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+use craft\helpers\Json;
 
 /**
-* @author    Jalen Davenport
-* @package   Fetch
-* @since     1.1.0
-*/
-class FetchTwigExtension extends \Twig_Extension
+ * @author    Jalen Davenport
+ * @package   Fetch
+ * @since     1.1.0
+ */
+class FetchTwigExtension extends AbstractExtension
 {
-  public function getName()
-  {
-      return 'Fetch';
-  }
+    /**
+     * @return TwigFunction[]
+     */
+    public function getFunctions(): array
+    {
+        return [
+            new TwigFunction('fetch', [$this, 'fetch']),
+        ];
+    }
 
-  public function getFunctions()
-  {
-      return [
-          new \Twig_SimpleFunction('fetch', [$this, 'fetch']),
-      ];
-  }
+    /**
+     * @param $client
+     * @param $method
+     * @param $destination
+     * @param array $request
+     * @param bool $parseJson
+     * @return array
+     */
+    public function fetch($client, $method, $destination, array $request = [], bool $parseJson = true): array
+    {
+        $client = Craft::createGuzzleClient($client);
 
-  public function fetch($client, $method, $destination, $request = [], $parseJson = true)
-  {
-      $client = new \GuzzleHttp\Client($client);
+        try {
+            $result = $client->request($method, $destination, $request);
+        } catch (GuzzleException $e) {
+            Craft::error($e->getMessage(), __METHOD__);
+            return [
+                'error' => true,
+                'reason' => $e->getMessage()
+            ];
+        }
 
-      try {
+        $body = '';
 
-        $response = $client->request($method, $destination, $request);
+        if (Json::isJsonObject($result->getBody())) {
+            $body = Json::decode($result->getBody());
+        }
 
-        if ($parseJson) {
-            $body = json_decode($response->getBody(), true);
-        } else {
-            $body = (string)$response->getBody();
+        if (!$parseJson) {
+            $body = (string)$result->getBody();
         }
 
         return [
-          'statusCode' => $response->getStatusCode(),
-          'reason' => $response->getReasonPhrase(),
-          'body' => $body
+            'statusCode' => $result->getStatusCode(),
+            'reason' => $result->getReasonPhrase(),
+            'body' => $body
         ];
-
-      } catch (\Exception $e) {
-
-        return [
-          'error' => true,
-          'reason' => $e->getMessage()
-        ];
-
-      }
-  }
+    }
 }

@@ -1,8 +1,8 @@
 <?php
 /**
- * Fetch plugin for Craft CMS 3.x
+ * Fetch plugin for Craft 4
  *
- * Utilise the Guzzle HTTP client from within your Craft templates.
+ * Guzzle HTTP client from within your Craft templates.
  *
  * @link      https://github.com/jalendport
  * @copyright Copyright (c) 2018 Jalen Davenport
@@ -10,15 +10,11 @@
 
 namespace jalendport\fetch;
 
-use jalendport\fetch\variables\FetchVariable;
-use jalendport\fetch\twigextensions\FetchTwigExtension;
-
 use Craft;
 use craft\base\Plugin;
-use craft\services\Plugins;
-use craft\events\PluginEvent;
 use craft\web\twig\variables\CraftVariable;
-
+use jalendport\fetch\twigextensions\FetchTwigExtension;
+use jalendport\fetch\variables\FetchVariable;
 use yii\base\Event;
 
 /**
@@ -31,13 +27,14 @@ use yii\base\Event;
  */
 class Fetch extends Plugin
 {
-    // Static Properties
+    // Properties
     // =========================================================================
 
-    /**
-     * @var Fetch
-     */
-    public static $plugin;
+    public static mixed $plugin;
+
+    public bool $hasCpSection = false;
+
+    public bool $hasCpSettings = false;
 
     // Public Methods
     // =========================================================================
@@ -45,10 +42,14 @@ class Fetch extends Plugin
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         self::$plugin = $this;
+
+        if (!$this->isInstalled) {
+            return;
+        }
 
         Craft::$app->view->registerTwigExtension(new FetchTwigExtension());
 
@@ -62,15 +63,6 @@ class Fetch extends Plugin
             }
         );
 
-        Event::on(
-            Plugins::class,
-            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
-                if ($event->plugin === $this) {
-                }
-            }
-        );
-
         Craft::info(
             Craft::t(
                 'fetch',
@@ -80,8 +72,4 @@ class Fetch extends Plugin
             __METHOD__
         );
     }
-
-    // Protected Methods
-    // =========================================================================
-
 }

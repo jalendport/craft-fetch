@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0 - 2023-04-17
+
+Craft 4 | PHP 8
+
 ## 1.3.0 - 2019-11-16
 
 Transfer of ownership 👀

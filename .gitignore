@@ -1,1 +1,26 @@
-*.DS_Store
+# composer
+/vendor
+/composer.lock
+
+# thumbnails
+._*
+
+# misc
+.sass-cache
+.cache
+.php_cs.cache
+ecs.php
+.DS_Store
+.project
+.settings
+*.esproj
+*.sublime-workspace
+*.sublime-project
+*.tmproj
+*.tmproject
+config.codekit3
+prepros-6.config
+
+# ide
+.idea
+.vscode
