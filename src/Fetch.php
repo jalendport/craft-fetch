@@ -1,6 +1,6 @@
 <?php
 /**
- * Fetch plugin for Craft CMS 3.x
+ * Fetch plugin for Craft CMS 4.x
  *
  * Utilise the Guzzle HTTP client from within your Craft templates.
  *
@@ -10,15 +10,11 @@
 
 namespace jalendport\fetch;
 
-use jalendport\fetch\variables\FetchVariable;
-use jalendport\fetch\twigextensions\FetchTwigExtension;
-
 use Craft;
 use craft\base\Plugin;
-use craft\services\Plugins;
-use craft\events\PluginEvent;
 use craft\web\twig\variables\CraftVariable;
-
+use jalendport\fetch\variables\FetchVariable;
+use jalendport\fetch\twigextensions\FetchTwigExtension;
 use yii\base\Event;
 
 /**
@@ -31,57 +27,37 @@ use yii\base\Event;
  */
 class Fetch extends Plugin
 {
-    // Static Properties
-    // =========================================================================
 
-    /**
-     * @var Fetch
-     */
-    public static $plugin;
+	// Public Methods
+	// =========================================================================
 
-    // Public Methods
-    // =========================================================================
+	/**
+	 * @inheritdoc
+	 */
+	public function init(): void
+	{
+		parent::init();
 
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        parent::init();
-        self::$plugin = $this;
+		Craft::$app->view->registerTwigExtension(new FetchTwigExtension());
 
-        Craft::$app->view->registerTwigExtension(new FetchTwigExtension());
+		Event::on(
+			CraftVariable::class,
+			CraftVariable::EVENT_INIT,
+			function (Event $event) {
+				/** @var CraftVariable $variable */
+				$variable = $event->sender;
+				$variable->set('fetch', FetchVariable::class);
+			}
+		);
 
-        Event::on(
-            CraftVariable::class,
-            CraftVariable::EVENT_INIT,
-            function (Event $event) {
-                /** @var CraftVariable $variable */
-                $variable = $event->sender;
-                $variable->set('fetch', FetchVariable::class);
-            }
-        );
-
-        Event::on(
-            Plugins::class,
-            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
-                if ($event->plugin === $this) {
-                }
-            }
-        );
-
-        Craft::info(
-            Craft::t(
-                'fetch',
-                '{name} plugin loaded',
-                ['name' => $this->name]
-            ),
-            __METHOD__
-        );
-    }
-
-    // Protected Methods
-    // =========================================================================
+		Craft::info(
+			Craft::t(
+				'fetch',
+				'{name} plugin loaded',
+				['name' => $this->name]
+			),
+			__METHOD__
+		);
+	}
 
 }
