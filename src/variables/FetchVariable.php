@@ -1,6 +1,6 @@
 <?php
 /**
- * Fetch plugin for Craft CMS 3.x
+ * Fetch plugin for Craft CMS 4.x
  *
  * Utilise the Guzzle HTTP client from within your Craft templates.
  *
@@ -10,9 +10,9 @@
 
 namespace jalendport\fetch\variables;
 
-use jalendport\fetch\Fetch;
-
-use Craft;
+use Exception;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * @author    Jalen Davenport
@@ -21,36 +21,42 @@ use Craft;
  */
 class FetchVariable
 {
-    // Public Methods
-    // =========================================================================
 
-    /**
-     * @param null $optional
-     * @return string
-     */
-    public function request($client, $method, $destination, $request = [])
-    {
+	// Public Methods
+	// =========================================================================
 
-        $client = new \GuzzleHttp\Client($client);
+	/**
+	 * @param $client
+	 * @param $method
+	 * @param $destination
+	 * @param array $request
+	 * @return array|string
+	 * @throws GuzzleException
+	 */
+	public function request($client, $method, $destination, array $request = []): array|string
+	{
 
-        try {
+		$client = new Client($client);
 
-          $response = $client->request($method, $destination, $request);
+		try {
 
-          return [
-            'statusCode' => $response->getStatusCode(),
-            'reason' => $response->getReasonPhrase(),
-            'body' => json_decode($response->getBody(), true)
-          ];
+			$response = $client->request($method, $destination, $request);
 
-        } catch (\Exception $e) {
+			return [
+				'statusCode' => $response->getStatusCode(),
+				'reason' => $response->getReasonPhrase(),
+				'body' => json_decode($response->getBody(), true)
+			];
 
-          return [
-            'error' => true,
-            'reason' => $e->getMessage()
-          ];
+		} catch (Exception $e) {
 
-        }
+			return [
+				'error' => true,
+				'reason' => $e->getMessage()
+			];
 
-    }
+		}
+
+	}
+
 }
