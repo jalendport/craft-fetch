@@ -10,16 +10,15 @@
 
 namespace jalendport\fetch\twigextensions;
 
-use jalendport\fetch\Fetch;
-
-use Craft;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
 * @author    Jalen Davenport
 * @package   Fetch
 * @since     1.1.0
 */
-class FetchTwigExtension extends \Twig_Extension
+class FetchTwigExtension extends AbstractExtension
 {
   public function getName()
   {
@@ -29,7 +28,7 @@ class FetchTwigExtension extends \Twig_Extension
   public function getFunctions()
   {
       return [
-          new \Twig_SimpleFunction('fetch', [$this, 'fetch']),
+          new TwigFunction('fetch', [$this, 'fetch']),
       ];
   }
 
