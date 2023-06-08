@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-beta.1 - 2023-06-08
+
+### Added
+- Initial Craft 4 release
+
 ## 1.3.0 - 2019-11-16
 
 Transfer of ownership 👀
