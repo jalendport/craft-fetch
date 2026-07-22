@@ -1,91 +1,46 @@
+> [!WARNING] 
+> This plugin has been abandoned.
+
+---
+
 <img src="src/icon.svg" alt="icon" width="100" height="100">
 
-# Fetch plugin for Craft CMS 3.x
+# Fetch plugin for Craft CMS
 
-Utilise the Guzzle HTTP client from within your Craft templates.
+## Why this plugin is retired
 
-## Requirements
+Fetch made synchronous, uncached HTTP requests during Twig rendering. That was a convenient shortcut in 2018, but it's now a well-documented performance anti-pattern: every page render blocks on the external API, and if that API slows down or goes down, so does your site. Craft can also now do everything this plugin did natively, with no plugin installed.
 
-This plugin requires Craft CMS 3.0.0 or later.
+## Migrating away from Fetch
 
-## Installation
+### Option 1: Native Twig (direct replacement)
 
-To install the plugin, follow these instructions.
+Guzzle ships with Craft, and Craft's `create()` Twig function can instantiate it — no plugin required. This is a drop-in replacement for what Fetch did:
 
-1. Open your terminal and go to your Craft project:
+    {% set client = create('GuzzleHttp\\Client') %}
 
-        cd /path/to/project
+    {% set response = client.request('GET', 'https://api.example.com/endpoint', {
+        timeout: 5,
+        http_errors: false,
+    }) %}
 
-2. Then tell Composer to load the plugin:
+    {% if response.getStatusCode() == 200 %}
+        {% set data = response.getBody().getContents() | json_decode %}
+    {% endif %}
 
-        composer require jalendport/craft-fetch
+Note that this has the same drawback Fetch had: it blocks the render. If you use it, wrap the output in a [`{% cache %}` tag](https://craftcms.com/docs/5.x/reference/twig/tags.html#cache) at minimum.
 
-3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Fetch.
+### Option 2: Do it properly (recommended for production)
 
-## Using Fetch
+- **Server-side data:** fetch in a [custom module/service](https://craftcms.com/docs/5.x/extend/services.html) and cache the result, keeping HTTP out of the render path entirely.
+- **Async partials:** use [Sprig](https://putyourlightson.com/plugins/sprig) or htmx to load API-driven fragments after first paint.
+- **Non-critical or personalized data:** fetch client-side in JavaScript.
 
-This plugin is built to work with the standard [Guzzle request options](http://docs.guzzlephp.org/en/stable/request-options.html)
+### Option 3: Maintained plugin alternatives
 
-### Parameters
+- [**Consume** by Verbb](https://plugins.craftcms.com/consume) — commercial; built-in caching, OAuth/credential management in the control panel, JSON/XML/CSV/HTML parsing.
+- [**Simple Guzzle**](https://plugins.craftcms.com/simple-guzzle) — free; template-level requests with caching.
 
-| Parameter | Example value |
-| --------- | ------------- |
-| `client`  | `{ base_uri : 'https://gtmetrix.com', timeout : 10 } ` |
-| `method`  | `'POST'` |
-| `destination` | `'api/0.1/test'` |
-| `options` | `{ auth : ['username', 'password'] }` |
+## Thanks
 
-### Example Usage
-
-#### Request
-
-```twig
-{% set client = {
-    base_uri : 'https://gtmetrix.com',
-    timeout : 10
-} %}
-
-{% set options = {
-    auth : ['username', 'password'],
-    form_params : {
-      url : 'https://www.google.co.uk'
-    }
-} %}
-
-{% set request = fetch(client, 'POST', 'api/0.1/test', options) %}
-```
-
-#### Response (successful)
-
-```json
-{
-   "statusCode":200,
-   "reason":"OK",
-   "body": {
-      "credits_left":30,
-      "test_id":"JDHFbrt7",
-      "poll_state_url":"https:\/\/gtmetrix.com\/api\/0.1\/test\/JDHFbrt7"
-   }
-}
-```
-
-You can fetch the string response by adding an additional parameter of `false` like so:
-
-```twig
-{% set request = fetch(client, 'POST', 'api/0.1/test', options, false) %}
-```
-
-#### Response (error)
-
-```json
-{
-   "error":true,
-   "reason":"Client error: `POST https:\/\/gtmetrix.com\/api\/0.1\/test` resulted in a `401 Authorization Required` response:\n{\u0022error\u0022:\u0022Invalid e-mail and\/or API key\u0022}\n\n"
-}
-```
-
-## Fetch Roadmap
-
-Some things to do, and ideas for potential features:
-
-Brought to you by [Luke Youell](https://github.com/lukeyouell)
+Thanks to [Luke Youell](https://github.com/lukeyouell) for creating this plugin, and to everyone who used and contributed to it over the years.
